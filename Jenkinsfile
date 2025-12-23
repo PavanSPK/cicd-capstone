@@ -24,26 +24,29 @@ pipeline {
         }
 
         stage('Container Test (Health Check)') {
-            steps {
-                sh '''
-                docker-compose down || true
-                docker-compose up -d
+    steps {
+        sh '''
+        docker-compose down || true
+        docker-compose up -d
 
-                echo "Waiting for backend..."
-                for i in {1..10}; do
-                  docker-compose exec -T backend python -c "import socket; socket.create_connection(('localhost',5000),2)" && break
-                  sleep 2
-                done
+        echo "Waiting for backend to become healthy..."
 
-                docker-compose exec -T backend python - <<EOF
-import requests
-r = requests.get("http://localhost:5000/health")
-assert r.status_code == 200
-print("Health check passed")
-EOF
-                '''
-            }
-        }
+        for i in {1..10}; do
+          if docker-compose exec -T backend curl -sf http://localhost:5000/health; then
+            echo "Backend is healthy"
+            exit 0
+          fi
+          echo "Retry $i..."
+          sleep 3
+        done
+
+        echo "Backend health check failed"
+        docker-compose logs backend
+        exit 1
+        '''
+    }
+}
+
 
         stage('Security Scan (Trivy)') {
             steps {
