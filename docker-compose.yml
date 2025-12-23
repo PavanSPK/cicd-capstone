@@ -1,13 +1,15 @@
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "5000:5000"
+ backend:
+  image: cicd-backend
+  ports:
+    - "5000:5000"
 
-  frontend:
-    build: ./frontend
-    ports:
-      - "80:80"
+
+frontend:
+  image: cicd-frontend
+  ports:
+    - "80:80"
+
 
   db:
     image: postgres:15
