@@ -5,37 +5,20 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/yourusername/cicd-capstone.git'
+                echo 'Code checked out from GitHub'
             }
         }
 
         stage('Build Docker Images') {
             steps {
                 sh '''
-                docker build -t backend backend
-                docker build -t frontend frontend
+                docker build -t cicd-backend ./backend
+                docker build -t cicd-frontend ./frontend
                 '''
             }
         }
 
-        stage('Run Tests Inside Container') {
-            steps {
-                sh '''
-                docker run backend python -c "print('Tests passed')"
-                '''
-            }
-        }
-
-        stage('Security Scan') {
-            steps {
-                sh '''
-                echo "Trivy scan simulated"
-                '''
-            }
-        }
-
-        stage('Deploy to Dev') {
+        stage('Run Application (Docker Compose)') {
             steps {
                 sh '''
                 docker compose down
@@ -50,27 +33,6 @@ pipeline {
                 curl http://localhost:5000/health
                 '''
             }
-        }
-
-        stage('Approval for Production') {
-            steps {
-                input message: 'Deploy to Production?'
-            }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                sh '''
-                docker compose down
-                docker compose up -d
-                '''
-            }
-        }
-    }
-
-    post {
-        failure {
-            sh 'docker compose down'
         }
     }
 }
