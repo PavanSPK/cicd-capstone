@@ -2,15 +2,14 @@ version: "3.9"
 
 services:
   backend:
-  image: spk487/cicd-backend:latest
-  ports:
-    - "5000:5000"
+    image: spk487/cicd-backend:latest
+    ports:
+      - "5000:5000"
 
-  
   frontend:
     image: spk487/cicd-frontend:latest
     ports:
-    - "80:80"
+      - "80:80"
 
   db:
     image: postgres:15
