@@ -18,14 +18,15 @@ pipeline {
             }
         }
 
-        stage('Run Application (Docker Compose)') {
-            steps {
-                sh '''
-                docker compose down
-                docker compose up -d
-                '''
-            }
-        }
+      stage('Run Application (Docker Compose)') {
+    steps {
+        sh '''
+        docker-compose down || true
+        docker-compose up -d
+        '''
+    }
+}
+
 
         stage('Health Check') {
             steps {
