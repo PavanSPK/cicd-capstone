@@ -28,12 +28,15 @@ pipeline {
 }
 
 
-        stage('Health Check') {
-            steps {
-                sh '''
-                curl http://localhost:5000/health
-                '''
-            }
-        }
+      stage('Health Check') {
+    steps {
+        sh '''
+        echo "Waiting for backend to start..."
+        sleep 10
+        curl http://backend:5000/health
+        '''
+    }
+}
+
     }
 }
