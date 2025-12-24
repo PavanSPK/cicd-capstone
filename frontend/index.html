@@ -1,9 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>CI/CD Capstone</title>
+    <meta charset="UTF-8">
+    <title>Service Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #f9fafb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .status {
+            font-size: 28px;
+            font-weight: 600;
+            color: #16a34a;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #16a34a;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+    </style>
 </head>
 <body>
-  <h1>CI/CD Project Working </h1>
+
+    <div class="card">
+        <div class="status">
+            <span class="dot"></span>Status OK
+        </div>
+        <div class="subtitle">
+            Application is running healthy
+        </div>
+    </div>
+
 </body>
 </html>
