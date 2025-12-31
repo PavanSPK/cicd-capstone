@@ -78,6 +78,13 @@ pipeline {
             }
         }
 
+        stage('Prepare Deployment Scripts') {
+            steps {
+                sh 'chmod +x scripts/deploy.sh'
+            }
+        }
+
+
         stage('Deploy to Dev') {
             steps {
                 sh './scripts/deploy.sh dev'
