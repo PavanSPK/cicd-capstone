@@ -78,14 +78,30 @@ pipeline {
             }
         }
 
-        stage('Deploy Application') {
+        stage('Deploy to Dev') {
             steps {
-                sh '''
-                docker-compose down
-                docker-compose up -d
-                '''
+                sh './scripts/deploy.sh dev'
             }
         }
+
+        stage('Deploy to Staging') {
+            steps {
+                sh './scripts/deploy.sh staging'
+            }
+        }
+
+        stage('Approval for Production') {
+            steps {
+                input message: 'Approve deployment to Production?', ok: 'Deploy'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                sh './scripts/deploy.sh prod'
+            }
+        }
+
     }
 
     post {

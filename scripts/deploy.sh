@@ -1,11 +1,26 @@
 #!/bin/bash
+
 ENV=$1
 
-echo "Deploying to $ENV environment"
+if [ -z "$ENV" ]; then
+  echo "Usage: ./deploy.sh <dev|staging|prod>"
+  exit 1
+fi
 
-docker-compose pull
-docker-compose down
-docker-compose up -d
+ENV_FILE=".env.$ENV"
 
-echo "Verifying deployment"
+if [ ! -f "$ENV_FILE" ]; then
+  echo "Environment file $ENV_FILE not found!"
+  exit 1
+fi
+
+echo "Deploying to $ENV environment using $ENV_FILE"
+
+docker compose --env-file $ENV_FILE pull
+docker compose --env-file $ENV_FILE down
+docker compose --env-file $ENV_FILE up -d
+
+echo "Verifying deployment for $ENV"
 curl http://localhost:5000/health
+
+echo "Deployment successful for $ENV"
