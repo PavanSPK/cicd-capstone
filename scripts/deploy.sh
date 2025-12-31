@@ -21,6 +21,6 @@ docker compose --env-file $ENV_FILE down
 docker compose --env-file $ENV_FILE up -d
 
 echo "Verifying deployment for $ENV"
-curl http://localhost:5000/health
+docker-compose exec -T backend curl -sf http://localhost:5000/health
 
 echo "Deployment successful for $ENV"
