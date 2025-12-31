@@ -4,6 +4,10 @@ services:
     image: spk487/cicd-backend:latest
     ports:
       - "5000:5000"
+    env_file:
+      - .env.dev
+    depends_on:
+      - db
 
   frontend:
     image: spk487/cicd-frontend:latest
