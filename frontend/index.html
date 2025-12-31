@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Service Status</title>
+    <title>CI/CD Capstone Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -18,29 +18,49 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
         .card {
             background: #ffffff;
             padding: 40px 50px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            width: 600px;
+            border-radius: 14px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            width: 720px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+        }
+
+        .description {
+            margin-top: 10px;
+            font-size: 15px;
+            color: #6b7280;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .divider {
+            margin: 30px 0;
+            height: 1px;
+            background: #e5e7eb;
         }
 
         .status {
-            font-size: 26px;
+            font-size: 18px;
             font-weight: 600;
             color: #16a34a;
-            text-align: center;
+            margin-bottom: 6px;
         }
 
         .subtitle {
-            margin-top: 6px;
             font-size: 14px;
             color: #6b7280;
-            text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .dot {
@@ -52,10 +72,30 @@
             margin-right: 8px;
         }
 
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #f3f4f6;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 16px;
+            margin-top: 14px;
         }
 
         th, td {
@@ -75,17 +115,36 @@
             font-size: 14px;
             color: #374151;
         }
+
+        .error {
+            color: #dc2626;
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
 
+    <div class="title">CI/CD Capstone Project</div>
+    <div class="description">
+        This project demonstrates a complete CI/CD pipeline using Docker and Jenkins.
+        It automatically builds, tests, scans, and deploys a containerized web application
+        across multiple environments with a connected database.
+    </div>
+
+    <div class="divider"></div>
+
     <div class="status">
         <span class="dot"></span>Status OK
     </div>
     <div class="subtitle">
         Application is running healthy
+    </div>
+
+    <div class="buttons">
+        <button onclick="checkBackend()">Check Backend</button>
+        <button onclick="checkHealth()">Check Health</button>
+        <button onclick="loadDatabase()">Refresh Database</button>
     </div>
 
     <div class="status" id="db-status">
@@ -107,34 +166,54 @@
 </div>
 
 <script>
-fetch("http://localhost:5000/db-status")
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("db-status").innerHTML =
-            '<span class="dot"></span>Database Connected';
+const backendUrl = "http://localhost:5000";
 
-        document.getElementById("record-count").innerText =
-            'Total Records: ' + data.count;
+function checkBackend() {
+    fetch(backendUrl + "/")
+        .then(res => res.json())
+        .then(() => alert("Backend is reachable and responding"))
+        .catch(() => alert("Backend is not reachable"));
+}
 
-        const tbody = document.querySelector("#employee-table tbody");
-        tbody.innerHTML = "";
+function checkHealth() {
+    fetch(backendUrl + "/health")
+        .then(res => res.json())
+        .then(() => alert("Health check passed"))
+        .catch(() => alert("Health check failed"));
+}
 
-        data.employees.forEach(emp => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${emp.id}</td>
-                <td>${emp.name}</td>
-                <td>${emp.domain}</td>
-            `;
-            tbody.appendChild(row);
+function loadDatabase() {
+    fetch(backendUrl + "/db-status")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("db-status").innerHTML =
+                '<span class="dot"></span>Database Connected';
+
+            document.getElementById("record-count").innerText =
+                'Total Records: ' + data.count;
+
+            const tbody = document.querySelector("#employee-table tbody");
+            tbody.innerHTML = "";
+
+            data.employees.forEach(emp => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${emp.id}</td>
+                    <td>${emp.name}</td>
+                    <td>${emp.domain}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById("employee-table").style.display = "table";
+        })
+        .catch(() => {
+            document.getElementById("db-status").innerHTML =
+                '<span class="dot error"></span>Database Error';
         });
+}
 
-        document.getElementById("employee-table").style.display = "table";
-    })
-    .catch(() => {
-        document.getElementById("db-status").innerHTML =
-            '<span class="dot"></span>Database Error';
-    });
+loadDatabase();
 </script>
 
 </body>
