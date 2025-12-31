@@ -1,4 +1,11 @@
-CREATE TABLE test (
-  id SERIAL PRIMARY KEY,
-  name TEXT
+CREATE TABLE IF NOT EXISTS employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    domain VARCHAR(100)
 );
+
+INSERT INTO employees (name, domain)
+VALUES
+('spk', 'DevOps'),
+('siva bhai', 'Backend'),
+('Mannu', 'Frontend');

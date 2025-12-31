@@ -13,7 +13,7 @@
 
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             background: #f9fafb;
             display: flex;
             align-items: center;
@@ -22,22 +22,25 @@
 
         .card {
             background: #ffffff;
-            padding: 40px 60px;
+            padding: 40px 50px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            text-align: center;
+            width: 600px;
         }
 
         .status {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 600;
             color: #16a34a;
+            text-align: center;
         }
 
         .subtitle {
-            margin-top: 8px;
+            margin-top: 6px;
             font-size: 14px;
             color: #6b7280;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         .dot {
@@ -48,18 +51,91 @@
             border-radius: 50%;
             margin-right: 8px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f3f4f6;
+            font-weight: 600;
+        }
+
+        .count {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #374151;
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="status">
-            <span class="dot"></span>Status OK
-        </div>
-        <div class="subtitle">
-            Application is running healthy
-        </div>
+<div class="card">
+
+    <div class="status">
+        <span class="dot"></span>Status OK
     </div>
+    <div class="subtitle">
+        Application is running healthy
+    </div>
+
+    <div class="status" id="db-status">
+        <span class="dot"></span>Checking database...
+    </div>
+    <div class="count" id="record-count"></div>
+
+    <table id="employee-table" style="display:none;">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Domain</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<script>
+fetch("http://localhost:5000/db-status")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("db-status").innerHTML =
+            '<span class="dot"></span>Database Connected';
+
+        document.getElementById("record-count").innerText =
+            'Total Records: ' + data.count;
+
+        const tbody = document.querySelector("#employee-table tbody");
+        tbody.innerHTML = "";
+
+        data.employees.forEach(emp => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${emp.id}</td>
+                <td>${emp.name}</td>
+                <td>${emp.domain}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.getElementById("employee-table").style.display = "table";
+    })
+    .catch(() => {
+        document.getElementById("db-status").innerHTML =
+            '<span class="dot"></span>Database Error';
+    });
+</script>
 
 </body>
 </html>
