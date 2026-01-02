@@ -291,7 +291,6 @@ docker-compose.yml includes:
 - Isolated Docker network
 - Named volume for database persistence
 - Environment variables for database configuration
-
 Docker Compose is used both locally and during deployment to ensure environment consistency.
 
 ![docker_compose](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/docker_compose.png)
@@ -320,19 +319,21 @@ Pipeline Stages:
 
 -----------------------------------------------------------------------------------
 
-## 12. Container Health Check
-
-- Jenkins deploys containers
-- Polls /health endpoint
-- Retries before failing pipeline
+## 12. Runtime Health Check Enforcement
+After building the images, Jenkins:
+- Starts the containers using Docker Compose
+- Polls the /health endpoint
+- Retries automatically if needed
+- Fails the pipeline if the service does not become healthy
 
 -----------------------------------------------------------------------------------
 
-## 13. Security Scanning
-
-- Trivy scans backend image
-- HIGH and CRITICAL severity
-- Pipeline blocks deployment if issues found
+## 13. Security Scanning with Trivy
+Trivy is integrated into the pipeline as a mandatory gate.
+- Scans backend image
+- Checks for HIGH and CRITICAL vulnerabilities
+- Pipeline fails immediately if issues are found
+This step ensures that insecure images are never deployed.
 
 ![trivy_1](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/trivy_1.png)
 
@@ -343,28 +344,31 @@ Pipeline Stages:
 -----------------------------------------------------------------------------------
 
 ## 14. Docker Hub Image Registry
-
-- Secure login using access token
-- Backend and frontend images pushed separately
+- Backend and frontend images are pushed separately
+- Docker Hub access token is used (no plaintext credentials)
+- Images are versioned and reusable across environments
 
 ![dockerhub](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/dockerhub.png)
 
 -----------------------------------------------------------------------------------
 
 ## 15. Environment Mapping Explanation
+Although the same Docker Compose configuration is reused, logical environments are clearly defined through execution context and process separation.
 
-Development:
-- Local execution using docker-compose
-- Used for feature testing
+### Development Environment
+- Local machine execution
+- Manual docker-compose up
+- Used for development and local testing
 
-Staging:
-- Jenkins CI pipeline execution
-- Automated build, test, and scan
+### Staging Environment
+- Jenkins pipeline execution
+- Automated build, test, scan, and validation
+- Acts as a controlled pre-production gate
 
-Production:
-- Jenkins deploy stage
+### Production Environment
+- Final Jenkins deployment stage
 - Uses Docker Hub images
-- Fully automated deployment
+- Fully automated deployment via Docker Compose
 
 -----------------------------------------------------------------------------------
 
@@ -388,29 +392,72 @@ Production:
 -----------------------------------------------------------------------------------
 ## 18. Deployment Script
 deploy.sh performs:
-- Environment selection
-- Image pull
-- Container restart
-- Health verification
+- Existing containers are stopped
+- Latest images are pulled from Docker Hub
+- New containers are started using Docker Compose
+- No manual deployment steps are required
 
 -----------------------------------------------------------------------------------
-## 19.Troubleshooting
-Containers not starting:
+## 19.Troubleshooting Guide
+This section lists common issues encountered during local execution or CI/CD pipeline runs, along with quick resolutions.
+
+### Containers not starting:
+Symptoms: Containers exit or application is unreachable
+Fix:
 ```
 docker-compose logs
 ```
 
-Health check failing:
+### Frontend Loads but Backend Fails
+Symptoms: UI loads, API endpoints fail
+Fix:
+```
+docker-compose logs backend
+docker-compose restart backend
+```
+
+### Health check failing:
+Symptoms: Jenkins pipeline fails at /health check
+Fix:
 ```
 curl http://localhost:5000/health
 ```
+Ensure Flask binds to 0.0.0.0 and backend container is running.
 
-Old image running:
+### Database Connection Errors
+Symptoms: Backend crashes with DB errors
+Fix:
+```
+docker-compose logs db
+docker-compose restart db
+```
+Verify database environment variables.
+
+### GitHub Webhook Not Triggering Build
+Symptoms: Push does not start Jenkins job
+Fix:
+Verify webhook URL ends with /github-webhook/ and Jenkins is publicly reachable (ngrok if local).
+
+### Trivy Scan Fails Pipeline
+Symptoms: Pipeline stops at security scan
+Fix:
+Update base images or dependencies. Failure is expected for HIGH/CRITICAL vulnerabilities.
+
+### Old image still running:
+Symptoms: Latest changes not reflected
+Fix:
 ```
 docker-compose down
 docker-compose pull
 docker-compose up -d
 ```
+### Jenkins Docker permission issue
+
+Ensure Jenkins has access to Docker:
+```
+-v /var/run/docker.sock:/var/run/docker.sock
+```
+
 -----------------------------------------------------------------------------------
 
 ## 20.Conclusion
