@@ -275,7 +275,7 @@ Image Content Size:
 - Backend (multi-stage): ~56 MB
 - Frontend (Nginx Alpine): ~23 MB
 
-![image_optimize](hhttps://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/image_optimize.png)
+![image_optimize](https://github.com/PavanSPK/cicd-capstone/blob/36ad1ad1018615b6f743b5c002a6472a905ad900/screenshots/image_optimize.png)
 
 -----------------------------------------------------------------------------------
 
@@ -332,7 +332,7 @@ Pipeline Stages:
 - HIGH and CRITICAL severity
 - Pipeline blocks deployment if issues found
 
-![trivy_1]https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/trivy_1.png)
+![trivy_1](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/trivy_1.png)
 
 ![trivy_2](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/trivy_2.png)
 
