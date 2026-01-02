@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS employees (
 INSERT INTO employees (name, domain)
 VALUES
 ('spk', 'DevOps'),
-('siva bhai', 'Backend'),
-('Mannu', 'Frontend');
+('siva', 'Backend'),
+('Manoj', 'Frontend');
