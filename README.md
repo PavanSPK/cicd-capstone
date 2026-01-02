@@ -2,9 +2,10 @@
 
 ## 1.Project Overview
 
-This project implements a complete CI/CD pipeline that automatically builds, tests, scans, pushes, and deploys a simple 2-tier web application using Docker, Docker Compose, and Jenkins.
+In this project, I designed and implemented an end-to-end CI/CD pipeline using Docker, Docker Compose, and Jenkins for a simple 2-tier web application.
+The objective was to automate the complete application lifecycle — from code commit to deployment — while following practical DevOps and containerization best practices.
 
-The pipeline demonstrates real-world DevOps practices including container best practices, runtime health checks, security scanning, image registry usage, and automated deployment.
+The pipeline is triggered automatically on every code push and performs build, runtime validation, security scanning, image publishing, and deployment without manual intervention.
 
 -----------------------------------------------------------------------------------
 
@@ -255,16 +256,16 @@ Health Endpoint: http://localhost:5000/health
 
 ## 9.Dockerization Strategy
 ### 9.1 Backend Dockerfile
-- Multi-stage build
-- Slim base image
-- Non-root user
-- Layer caching
-- Environment variable configuration
+The backend image follows container best practices:
+- Multi-stage build to reduce image size
+- Non-root user (appuser) for security
+- Optimized layer caching
+- Minimal final runtime image
 
 ### 9.2 Frontend Dockerfile
-- Uses nginx:alpine
-- Minimal image size
-- Static file serving
+- Based on nginx:alpine
+- Serves static content only
+- Extremely small image footprint
 
 ### 9.3 Image Optimization
 Docker images were optimized using best practices.
@@ -281,16 +282,17 @@ Image Content Size:
 
 ## 10. Docker Compose Configuration
 docker-compose.yml includes:
-- frontend
+### Services
 - backend
-- database
-- custom network
-- persistent volume
+- frontend
+- db (PostgreSQL)
 
-Used in:
-- Local development
-- Jenkins testing
-- Deployment stages
+### Features
+- Isolated Docker network
+- Named volume for database persistence
+- Environment variables for database configuration
+
+Docker Compose is used both locally and during deployment to ensure environment consistency.
 
 ![docker_compose](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/docker_compose.png)
 
@@ -298,7 +300,7 @@ Used in:
 
 ## 11. CI/CD Pipeline Using Jenkins
 
-Pipeline defined in Jenkinsfile.
+The complete CI/CD workflow is defined in the Jenkinsfile
 
 ### Pipeline Stages
 
