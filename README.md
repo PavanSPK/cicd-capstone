@@ -37,7 +37,7 @@ Build a complete CI/CD system that automatically tests, builds, and deploys a si
 
 The application follows a 2-tier architecture with CI/CD automation.
 
-- Architecture Flow:
+Architecture Flow:
 - Developer pushes code to GitHub
 - GitHub Webhook triggers Jenkins automatically
 - Jenkins pipeline builds, tests, scans, and pushes images
