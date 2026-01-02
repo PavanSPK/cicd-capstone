@@ -102,7 +102,7 @@ cicd-capstone/
 ```
 -----------------------------------------------------------------------------------
 
-## 7. Tools & Technologies Used (IMPORTANT)
+## 7. Tools & Technologies Used
 
 List of all tools used in the project, along with their purpose and where they are implemented.
 
@@ -151,7 +151,7 @@ Usage in Project:
 
 ### 7.7 Flask
 Purpose: Backend web framework
-- Usage in Project:
+Usage in Project:
 - Provides REST APIs
 - Exposes /health and /db-status endpoints
 - Connects to PostgreSQL database
@@ -251,11 +251,14 @@ docker-compose up -d
 - Static file serving
 
 ### 9.3 Image Optimization
-- Image	Content Size
-- Backend (multi-stage)	~56 MB
-- Frontend (Nginx Alpine)	~23 MB
+Docker images were optimized using best practices.
 
-This demonstrates significant size reduction using multi-stage builds.
+- Backend image uses multi-stage builds to exclude build-time dependencies.
+- Frontend image uses Nginx Alpine for a minimal runtime footprint.
+
+Image Content Size:
+- Backend (multi-stage): ~56 MB
+- Frontend (Nginx Alpine): ~23 MB
 
 Add Screenshot: docker images output showing image sizes
 
