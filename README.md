@@ -45,7 +45,7 @@ The application follows a 2-tier architecture with CI/CD automation.
 - Frontend communicates with backend
 - Backend interacts with PostgreSQL database
 
-(add screenshot: architecture diagram)
+![cicd](https://github.com/PavanSPK/cicd-capstone/blob/443ed22f47f3f8647e917bde653fea0c22d8ff54/screenshots/cicd.png)
 
 -----------------------------------------------------------------------------------
 ## 5.Application Architecture
