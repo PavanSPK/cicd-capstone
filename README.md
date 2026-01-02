@@ -47,7 +47,7 @@ Architecture Flow:
 
 ![cicd](https://github.com/PavanSPK/cicd-capstone/blob/443ed22f47f3f8647e917bde653fea0c22d8ff54/screenshots/cicd.png)
 
-### Jenkins pipeline Architecture
+### Jenkins Pipeline Architecture
 
 ![jenkins_pipeline](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/jenkins_pipeline.png)
 
