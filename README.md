@@ -139,7 +139,7 @@ Usage in Project:
 - Triggers Jenkins pipeline using GitHub Webhooks
 - Acts as the CI trigger point
 
-### 7.5 GitHub Webhook (Real CI)
+### 7.5 GitHub Webhook
 Purpose: Automatic pipeline triggering
 Usage in Project:
 - Jenkins pipeline starts automatically on every git push
@@ -254,7 +254,7 @@ Health Endpoint: http://localhost:5000/health
 -----------------------------------------------------------------------------------
 
 ## 9.Dockerization Strategy
-### 9.1 Backend Dockerfile (Best Practices)
+### 9.1 Backend Dockerfile
 - Multi-stage build
 - Slim base image
 - Non-root user
