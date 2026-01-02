@@ -47,6 +47,10 @@ The application follows a 2-tier architecture with CI/CD automation.
 
 ![cicd](https://github.com/PavanSPK/cicd-capstone/blob/443ed22f47f3f8647e917bde653fea0c22d8ff54/screenshots/cicd.png)
 
+### Jenkins pipeline Architecture
+
+![jenkins_pipeline](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/jenkins_pipeline.png)
+
 -----------------------------------------------------------------------------------
 ## 5.Application Architecture
 ### 5.1 Frontend
@@ -70,7 +74,7 @@ The application follows a 2-tier architecture with CI/CD automation.
 - Stores employee records
 - Persistent volume for data durability
 
-Add Screenshot: Application UI showing database records
+![application](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/application.png)
 
 -----------------------------------------------------------------------------------
 
@@ -208,8 +212,6 @@ git clone https://github.com/PavanSPK/cicd-capstone.git
 cd cicd-capstone
 ```
 
-(add screenshot: git clone output)
-
 ### Step 2: Pull Docker Images
 
 ```
@@ -217,15 +219,11 @@ docker pull spk487/cicd-backend:latest
 docker pull spk487/cicd-frontend:latest
 ```
 
-(add screenshot: docker pull output)
-
 ### Step 3: Run Application
 
 ```
 docker-compose up -d
 ```
-
-(add screenshot: docker-compose up)
 
 ### Step 4: Verify Application
 
@@ -233,7 +231,25 @@ docker-compose up -d
 - Backend API: http://localhost:5000
 - Health Endpoint: http://localhost:5000/health
 
-(add screenshot: browser output)
+### Backend Check
+
+![backend_check](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/backend_check.png)
+
+Backend API: http://localhost:5000
+
+![backend](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/backend.png)
+
+### Health check
+
+![health_check](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/health_check.png)
+
+Health Endpoint: http://localhost:5000/health
+
+![health_status](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/health_status.png)
+
+### Database check
+
+![db_status](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/db_status.png)
 
 -----------------------------------------------------------------------------------
 
@@ -252,7 +268,6 @@ docker-compose up -d
 
 ### 9.3 Image Optimization
 Docker images were optimized using best practices.
-
 - Backend image uses multi-stage builds to exclude build-time dependencies.
 - Frontend image uses Nginx Alpine for a minimal runtime footprint.
 
@@ -260,7 +275,7 @@ Image Content Size:
 - Backend (multi-stage): ~56 MB
 - Frontend (Nginx Alpine): ~23 MB
 
-Add Screenshot: docker images output showing image sizes
+![image_optimize](hhttps://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/image_optimize.png)
 
 -----------------------------------------------------------------------------------
 
@@ -277,7 +292,7 @@ Used in:
 - Jenkins testing
 - Deployment stages
 
-Screenshot: docker-compose services running
+![docker_compose](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/docker_compose.png)
 
 -----------------------------------------------------------------------------------
 
@@ -299,7 +314,7 @@ Pipeline Stages:
 8. Manual Approval
 9. Deploy to Production
 
-(add screenshot: Jenkins pipeline success)
+![cicd_pipeline](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/cicd_pipeline.png)
 
 -----------------------------------------------------------------------------------
 
@@ -317,7 +332,11 @@ Pipeline Stages:
 - HIGH and CRITICAL severity
 - Pipeline blocks deployment if issues found
 
-(add screenshot: Trivy scan output)
+![trivy_1]https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/trivy_1.png)
+
+![trivy_2](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/trivy_2.png)
+
+![trivy_3](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/trivy_3.png)
 
 -----------------------------------------------------------------------------------
 
@@ -326,7 +345,7 @@ Pipeline Stages:
 - Secure login using access token
 - Backend and frontend images pushed separately
 
-(add screenshot: Docker Hub repositories)
+![dockerhub](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/dockerhub.png)
 
 -----------------------------------------------------------------------------------
 
@@ -352,8 +371,7 @@ Production:
 - No manual intervention required
 - ngrok provides public webhook access
 
-Screenshot: GitHub webhook configuration
-Screenshot: ngrok URL
+![ngrok](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/ngrok.png)
 
 -----------------------------------------------------------------------------------
 ## 17. Continuous Deployment
@@ -363,7 +381,7 @@ Screenshot: ngrok URL
 - Verifies deployment using /health endpoint
 - Production deployment requires manual approval
 
-Screenshot: Jenkins approval stage
+![approve](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/approve.png)
 
 -----------------------------------------------------------------------------------
 ## 18. Deployment Script
@@ -400,3 +418,9 @@ This capstone project successfully demonstrates the design and implementation of
 By integrating real webhook-based Continuous Integration, multi-stage Docker image optimization, automated security scanning, and controlled production deployments with manual approval, the project reflects industry-standard DevOps practices. The working frontend–backend–database integration further validates the correctness of the deployment and the effectiveness of the pipeline.
 
 Overall, the project shows end-to-end demonstration of modern CI/CD concepts suitable for real-world applications.
+
+-----------------------------------------------------------------------------------
+
+## Author
+**Sandu Pavan Kumar**  
+GitHub: [@PavanSPK](https://github.com/PavanSPK) 
