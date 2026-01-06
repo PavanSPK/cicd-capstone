@@ -17,7 +17,6 @@ Build a complete CI/CD system that automatically tests, builds, and deploys a si
 
 ## 3.Technology Stack
 
-```
 | Layer            | Technology                  |
 | ---------------- | --------------------------- |
 | Frontend         | HTML + CSS served via Nginx |
@@ -31,7 +30,6 @@ Build a complete CI/CD system that automatically tests, builds, and deploys a si
 | Webhook Exposure | ngrok                       |
 | Version Control  | GitHub                      |
 
-```
 -----------------------------------------------------------------------------------
 
 ## 4.Project Architecture
