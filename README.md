@@ -117,14 +117,14 @@ Usage in Project:
 - Used in Jenkins pipeline for image build, push, and deployment
 
 ### 7.2 Docker Compose
-Purpose: Multi-container orchestration. 
+Purpose: Multi-container orchestration.  
 Usage in Project:
 - Defines frontend, backend, and database services
 - Creates shared networks and persistent volumes
 - Used for local development, testing, and deployment
 
 ### 7.3 Jenkins
-Purpose: CI/CD automation tool.
+Purpose: CI/CD automation tool.  
 Usage in Project:
 - Runs as a Docker container
 - Executes full CI/CD pipeline defined in Jenkinsfile
@@ -132,28 +132,28 @@ Usage in Project:
 - Includes manual approval gate for production
 
 ### 7.4 GitHub
-Purpose: Source code management.
+Purpose: Source code management.  
 Usage in Project:
 - Stores application source code
 - Triggers Jenkins pipeline using GitHub Webhooks
 - Acts as the CI trigger point
 
 ### 7.5 GitHub Webhook
-Purpose: Automatic pipeline triggering.
+Purpose: Automatic pipeline triggering.  
 Usage in Project:
 - Jenkins pipeline starts automatically on every git push
 - Eliminates manual “Build Now”
 - Enables true Continuous Integration
 
 ### 7.6 ngrok
-Purpose: Public URL tunneling.
+Purpose: Public URL tunneling.  
 Usage in Project:
 - Exposes locally running Jenkins to the public internet
 - Required because GitHub Webhooks need a public endpoint
 - Used only for webhook communication
 
 ### 7.7 Flask
-Purpose: Backend web framework.
+Purpose: Backend web framework.  
 Usage in Project:
 - Provides REST APIs
 - Exposes /health and /db-status endpoints
@@ -161,21 +161,21 @@ Usage in Project:
 - Returns JSON data consumed by frontend
 
 ### 7.8 Flask-CORS
-Purpose: Cross-Origin Resource Sharing.
+Purpose: Cross-Origin Resource Sharing.  
 Usage in Project:
 - Allows frontend (port 80) to access backend APIs (port 5000)
 - Prevents browser CORS blocking
 - Required for frontend–backend communication
 
 ### 7.9 Nginx
-Purpose: Web server.
+Purpose: Web server.  
 Usage in Project:
 - Serves static frontend files
 - Used with nginx:alpine image for minimal size
 - Acts as production-grade frontend server
 
 ### 7.10 PostgreSQL
-Purpose: Relational database.
+Purpose: Relational database.  
 Usage in Project:
 - Stores employee records
 - Runs as a Docker container
@@ -183,14 +183,14 @@ Usage in Project:
 - Data displayed dynamically on frontend UI
 
 ### 7.11 Trivy
-Purpose: Container security scanning.
+Purpose: Container security scanning.  
 Usage in Project:
 - Scans Docker images for vulnerabilities
 - Integrated into Jenkins pipeline
 - Ensures secure images before deployment
 
 ### 7.12 Bash / Shell Scripts
-Purpose: Deployment automation.
+Purpose: Deployment automation.  
 Usage in Project:
 - deploy.sh handles environment-specific deployment
 - Automates container restart and health verification
@@ -400,14 +400,14 @@ deploy.sh performs:
 This section lists common issues encountered during local execution or CI/CD pipeline runs, along with quick resolutions.
 
 ### Containers not starting:
-Symptoms: Containers exit or application is unreachable.
+Symptoms: Containers exit or application is unreachable.  
 Fix:
 ```
 docker-compose logs
 ```
 
 ### Frontend Loads but Backend Fails
-Symptoms: UI loads, API endpoints fail.
+Symptoms: UI loads, API endpoints fail.  
 Fix:
 ```
 docker-compose logs backend
@@ -415,7 +415,7 @@ docker-compose restart backend
 ```
 
 ### Health check failing:
-Symptoms: Jenkins pipeline fails at /health check.
+Symptoms: Jenkins pipeline fails at /health check.  
 Fix:
 ```
 curl http://localhost:5000/health
@@ -423,7 +423,7 @@ curl http://localhost:5000/health
 Ensure Flask binds to 0.0.0.0 and backend container is running.
 
 ### Database Connection Errors
-Symptoms: Backend crashes with DB errors.
+Symptoms: Backend crashes with DB errors.  
 Fix:
 ```
 docker-compose logs db
@@ -432,17 +432,17 @@ docker-compose restart db
 Verify database environment variables.
 
 ### GitHub Webhook Not Triggering Build
-Symptoms: Push does not start Jenkins job.
+Symptoms: Push does not start Jenkins job.  
 Fix:
 Verify webhook URL ends with /github-webhook/ and Jenkins is publicly reachable (ngrok if local).
 
 ### Trivy Scan Fails Pipeline
-Symptoms: Pipeline stops at security scan.
+Symptoms: Pipeline stops at security scan.  
 Fix:
 Update base images or dependencies. Failure is expected for HIGH/CRITICAL vulnerabilities.
 
 ### Old image still running:
-Symptoms: Latest changes not reflected.
+Symptoms: Latest changes not reflected.  
 Fix:
 ```
 docker-compose down
