@@ -110,7 +110,7 @@ cicd-capstone/
 List of all tools used in the project, along with their purpose and where they are implemented.
 
 ### 7.1 Docker
-Purpose: Containerization platform.
+Purpose: Containerization platform.  
 Usage in Project:
 - Containerizes frontend, backend, database, and Jenkins
 - Ensures consistency across environments
