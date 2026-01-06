@@ -117,7 +117,7 @@ Usage in Project:
 - Used in Jenkins pipeline for image build, push, and deployment
 
 ### 7.2 Docker Compose
-Purpose: Multi-container orchestration
+Purpose: Multi-container orchestration 
 Usage in Project:
 - Defines frontend, backend, and database services
 - Creates shared networks and persistent volumes
