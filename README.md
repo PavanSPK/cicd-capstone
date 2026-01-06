@@ -258,7 +258,7 @@ The backend image follows container best practices:
 - Multi-stage build to reduce image size
 - Non-root user (appuser) for security
 - Optimized layer caching
-- Minimal final runtime image.
+- Minimal final runtime image.  
 **Non-root User: appuser**  
 ![non_root](https://github.com/PavanSPK/cicd-capstone/blob/d294e97c6d6d386b4180cf47913bdf737c2253e8/screenshots/non_root.png)
 
