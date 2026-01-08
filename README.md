@@ -31,6 +31,52 @@ Build a complete CI/CD system that automatically tests, builds, and deploys a si
 | Version Control  | GitHub                      |
 
 -----------------------------------------------------------------------------------
+### 4.Project Design and Implementation Flow
+
+The project was designed by first building and testing all components locally, then integrating GitHub, Docker Hub, and Jenkins to create a fully automated CI/CD workflow. Since Jenkins was running locally, ngrok was used to expose it publicly so that GitHub webhooks could trigger the pipeline automatically.
+
+Project Design Flow Chart (How the Project Was Built)
+```
+Local Development (My PC)
+        |
+        |  Create application files
+        |  - Frontend
+        |  - Backend
+        |  - Dockerfiles
+        |  - docker-compose.yml
+        |  - Jenkinsfile
+        v
+Local Testing with Docker Compose
+        |
+        |  Verify application works locally
+        v
+Push Source Code to GitHub
+        |
+        |  Upload Docker images
+        v
+Push Images to Docker Hub
+        |
+        v
+Run Jenkins Using Docker Image
+        |
+        |  Jenkins runs in container
+        v
+Connect GitHub Repository to Jenkins
+        |
+        v
+Configure GitHub Webhook
+        |
+        |  Jenkins running on localhost
+        v
+Expose Jenkins Using ngrok
+        |
+        |  Convert localhost to public URL
+        v
+GitHub Webhook Trigger Enabled
+        |
+        v
+Automatic CI/CD Pipeline Execution
+```
 
 ## 4.Project Architecture
 
@@ -60,6 +106,24 @@ Architecture Flow:
     - Database connection status
     - Total record count
     - Employee data table
+```
+User Browser
+     |
+     |  HTTP Request (Port 80)
+     v
+Frontend Container (Nginx)
+     |
+     |  Serves static HTML / JS
+     v
+index.html
+     |
+     |  fetch()
+     v
+Backend API (/health, /db-status)
+     |
+     v
+Render Status & Data in UI
+```
 
 ### 5.2 Backend
 - Flask REST API
@@ -67,11 +131,49 @@ Architecture Flow:
     - /health – application health
     - /db-status – database status and employee records
 - Uses environment variables for database connection
+```
+Frontend Request
+      |
+      |  HTTP Request (Port 5000)
+      v
+Backend Container (Flask)
+      |
+      |  /health endpoint
+      |---------------------> Returns "OK"
+      |
+      |  /db-status endpoint
+      v
+Connect to Database
+      |
+      v
+Query Employee Records
+      |
+      v
+JSON Response to Frontend
+```
 
 ### 5.3 Database
 - PostgreSQL container
 - Stores employee records
 - Persistent volume for data durability
+```
+Backend Container
+      |
+      |  SQL Query
+      v
+PostgreSQL Container
+      |
+      |  Authentication
+      v
+employees Table
+      |
+      |  Fetch Records
+      v
+Result Set
+      |
+      v
+Backend Response
+```
 
 ![application](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/application.png)
 
@@ -396,7 +498,30 @@ deploy.sh performs:
 - Latest images are pulled from Docker Hub
 - New containers are started using Docker Compose
 - No manual deployment steps are required
-
+```
+Start deploy.sh
+     |
+     v
+Read Environment Argument
+     |
+     v
+Select Correct .env File
+     |
+     v
+Pull Latest Docker Images
+     |
+     v
+Stop Existing Containers
+     |
+     v
+Start New Containers
+     |
+     v
+Run Health Check
+     |
+     v
+Deployment SUCCESS / FAILURE
+```
 -----------------------------------------------------------------------------------
 ## 19.Troubleshooting Guide
 This section lists common issues encountered during local execution or CI/CD pipeline runs, along with quick resolutions.
