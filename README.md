@@ -427,6 +427,53 @@ After building the images, Jenkins:
 - Polls the /health endpoint
 - Retries automatically if needed
 - Fails the pipeline if the service does not become healthy
+```
+Jenkins Pipeline
+        |
+        v
++---------------------------+
+| Build Docker Images       |
++---------------------------+
+        |
+        v
++---------------------------+
+| Start Containers          |
+| (docker-compose up -d)   |
++---------------------------+
+        |
+        v
++---------------------------+
+| Poll /health Endpoint    |
+| (Backend Service)        |
++---------------------------+
+        |
+        v
++---------------------------+
+| Is Service Healthy?      |
++-----------+---------------+
+            |
+     +------+------+
+     |             |
+     v             v
++-----------+   +----------------------+
+| YES       |   | NO                   |
+|           |   | Retry Health Check   |
+| Continue  |   | (Wait & Recheck)     |
+| Pipeline  |   +----------+-----------+
++-----------+              |
+                            |
+                     +------+------+
+                     | Max Retries?|
+                     +------+------+
+                            |
+                   +--------+--------+
+                   |                 |
+                   v                 v
+           +---------------+   +----------------------+
+           | NO            |   | YES                  |
+           | Retry Again   |   | Fail Jenkins Pipeline|
+           +---------------+   +----------------------+
+```
 
 -----------------------------------------------------------------------------------
 
