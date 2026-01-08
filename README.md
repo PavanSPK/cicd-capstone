@@ -35,7 +35,7 @@ Build a complete CI/CD system that automatically tests, builds, and deploys a si
 
 The project was designed by first building and testing all components locally, then integrating GitHub, Docker Hub, and Jenkins to create a fully automated CI/CD workflow. Since Jenkins was running locally, ngrok was used to expose it publicly so that GitHub webhooks could trigger the pipeline automatically.
 
-Project Design Flow Chart (How the Project Was Built)
+**Project Design Flow Chart (How the Project Was Built)**
 ```
 Local Development (My PC)
         |
@@ -78,7 +78,7 @@ GitHub Webhook Trigger Enabled
 Automatic CI/CD Pipeline Execution
 ```
 
-## 4.Project Architecture
+## 5.Project Architecture
 
 The application follows a 2-tier architecture with CI/CD automation.
 
@@ -97,8 +97,8 @@ Architecture Flow:
 ![jenkins_pipeline](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/jenkins_pipeline.png)
 
 -----------------------------------------------------------------------------------
-## 5.Application Architecture
-### 5.1 Frontend
+## 6.Application Architecture
+### 6.1 Frontend
 - Static HTML/CSS application
 - Served using Nginx
 - Displays:
@@ -125,7 +125,7 @@ Backend API (/health, /db-status)
 Render Status & Data in UI
 ```
 
-### 5.2 Backend
+### 6.2 Backend
 - Flask REST API
 - Provides endpoints:
     - /health – application health
@@ -152,7 +152,7 @@ Query Employee Records
 JSON Response to Frontend
 ```
 
-### 5.3 Database
+### 6.3 Database
 - PostgreSQL container
 - Stores employee records
 - Persistent volume for data durability
@@ -179,7 +179,7 @@ Backend Response
 
 -----------------------------------------------------------------------------------
 
-## 6. Project Structure
+## 7. Project Structure
 
 ```
 cicd-capstone/
@@ -207,25 +207,25 @@ cicd-capstone/
 ```
 -----------------------------------------------------------------------------------
 
-## 7. Tools & Technologies Used
+## 8. Tools & Technologies Used
 
 List of all tools used in the project, along with their purpose and where they are implemented.
 
-### 7.1 Docker
+### 8.1 Docker
 Purpose: Containerization platform.  
 Usage in Project:
 - Containerizes frontend, backend, database, and Jenkins
 - Ensures consistency across environments
 - Used in Jenkins pipeline for image build, push, and deployment
 
-### 7.2 Docker Compose
+### 8.2 Docker Compose
 Purpose: Multi-container orchestration.  
 Usage in Project:
 - Defines frontend, backend, and database services
 - Creates shared networks and persistent volumes
 - Used for local development, testing, and deployment
 
-### 7.3 Jenkins
+### 8.3 Jenkins
 Purpose: CI/CD automation tool.  
 Usage in Project:
 - Runs as a Docker container
@@ -233,28 +233,28 @@ Usage in Project:
 - Handles build, test, scan, push, and deployment stages
 - Includes manual approval gate for production
 
-### 7.4 GitHub
+### 8.4 GitHub
 Purpose: Source code management.  
 Usage in Project:
 - Stores application source code
 - Triggers Jenkins pipeline using GitHub Webhooks
 - Acts as the CI trigger point
 
-### 7.5 GitHub Webhook
+### 8.5 GitHub Webhook
 Purpose: Automatic pipeline triggering.  
 Usage in Project:
 - Jenkins pipeline starts automatically on every git push
 - Eliminates manual “Build Now”
 - Enables true Continuous Integration
 
-### 7.6 ngrok
+### 8.6 ngrok
 Purpose: Public URL tunneling.  
 Usage in Project:
 - Exposes locally running Jenkins to the public internet
 - Required because GitHub Webhooks need a public endpoint
 - Used only for webhook communication
 
-### 7.7 Flask
+### 8.7 Flask
 Purpose: Backend web framework.  
 Usage in Project:
 - Provides REST APIs
@@ -262,21 +262,21 @@ Usage in Project:
 - Connects to PostgreSQL database
 - Returns JSON data consumed by frontend
 
-### 7.8 Flask-CORS
+### 8.8 Flask-CORS
 Purpose: Cross-Origin Resource Sharing.  
 Usage in Project:
 - Allows frontend (port 80) to access backend APIs (port 5000)
 - Prevents browser CORS blocking
 - Required for frontend–backend communication
 
-### 7.9 Nginx
+### 8.9 Nginx
 Purpose: Web server.  
 Usage in Project:
 - Serves static frontend files
 - Used with nginx:alpine image for minimal size
 - Acts as production-grade frontend server
 
-### 7.10 PostgreSQL
+### 8.10 PostgreSQL
 Purpose: Relational database.  
 Usage in Project:
 - Stores employee records
@@ -284,23 +284,23 @@ Usage in Project:
 - Connected to backend using environment variables
 - Data displayed dynamically on frontend UI
 
-### 7.11 Trivy
+### 8.11 Trivy
 Purpose: Container security scanning.  
 Usage in Project:
 - Scans Docker images for vulnerabilities
 - Integrated into Jenkins pipeline
 - Ensures secure images before deployment
 
-### 7.12 Bash / Shell Scripts
+### 8.12 Bash / Shell Scripts
 Purpose: Deployment automation.  
 Usage in Project:
 - deploy.sh handles environment-specific deployment
 - Automates container restart and health verification
 - Used by Jenkins during CD stages
 -----------------------------------------------------------------------------------
-## 8.Pulling and Running the Project on Any Computer
+## 9.Pulling and Running the Project on Any Computer
 
-## 8.1.Prerequisites
+## 9.1.Prerequisites
 - Docker
 - Docker Compose
 - Git
@@ -354,8 +354,8 @@ Health Endpoint: http://localhost:5000/health
 
 -----------------------------------------------------------------------------------
 
-## 9.Dockerization Strategy
-### 9.1 Backend Dockerfile
+## 10.Dockerization Strategy
+### 10.1 Backend Dockerfile
 The backend image follows container best practices:
 - Multi-stage build to reduce image size
 - Non-root user (appuser) for security
@@ -364,12 +364,12 @@ The backend image follows container best practices:
 **Non-root User: appuser**  
 ![non_root](https://github.com/PavanSPK/cicd-capstone/blob/d294e97c6d6d386b4180cf47913bdf737c2253e8/screenshots/non_root.png)
 
-### 9.2 Frontend Dockerfile
+### 10.2 Frontend Dockerfile
 - Based on nginx:alpine
 - Serves static content only
 - Extremely small image footprint
 
-### 9.3 Image Optimization
+### 10.3 Image Optimization
 Docker images were optimized using best practices.
 - Backend image uses multi-stage builds to exclude build-time dependencies.
 - Frontend image uses Nginx Alpine for a minimal runtime footprint.
@@ -382,7 +382,7 @@ Image Content Size:
 
 -----------------------------------------------------------------------------------
 
-## 10. Docker Compose Configuration
+## 11. Docker Compose Configuration
 docker-compose.yml includes:
 ### Services
 - backend
@@ -399,7 +399,7 @@ Docker Compose is used both locally and during deployment to ensure environment 
 
 -----------------------------------------------------------------------------------
 
-## 11. CI/CD Pipeline Using Jenkins
+## 12. CI/CD Pipeline Using Jenkins
 
 The complete CI/CD workflow is defined in the Jenkinsfile
 
@@ -421,7 +421,7 @@ Pipeline Stages:
 
 -----------------------------------------------------------------------------------
 
-## 12. Runtime Health Check Enforcement
+## 13. Runtime Health Check Enforcement
 After building the images, Jenkins:
 - Starts the containers using Docker Compose
 - Polls the /health endpoint
@@ -430,7 +430,7 @@ After building the images, Jenkins:
 
 -----------------------------------------------------------------------------------
 
-## 13. Security Scanning with Trivy
+## 14. Security Scanning with Trivy
 Trivy is integrated into the pipeline as a mandatory gate.
 - Scans backend image
 - Checks for HIGH and CRITICAL vulnerabilities
@@ -445,7 +445,7 @@ This step ensures that insecure images are never deployed.
 
 -----------------------------------------------------------------------------------
 
-## 14. Docker Hub Image Registry
+## 15. Docker Hub Image Registry
 - Backend and frontend images are pushed separately
 - Docker Hub access token is used (no plaintext credentials)
 - Images are versioned and reusable across environments
@@ -454,7 +454,7 @@ This step ensures that insecure images are never deployed.
 
 -----------------------------------------------------------------------------------
 
-## 15. Environment Mapping Explanation
+## 16. Environment Mapping Explanation
 Although the same Docker Compose configuration is reused, logical environments are clearly defined through execution context and process separation.
 
 ### Development Environment
@@ -474,7 +474,7 @@ Although the same Docker Compose configuration is reused, logical environments a
 
 -----------------------------------------------------------------------------------
 
-## 16. Continuous Integration (Webhook)
+## 17. Continuous Integration (Webhook)
 - Every GitHub push triggers Jenkins automatically
 - No manual intervention required
 - ngrok provides public webhook access
@@ -482,7 +482,7 @@ Although the same Docker Compose configuration is reused, logical environments a
 ![ngrok](https://github.com/PavanSPK/cicd-capstone/blob/2d41e469a2c54b668aaac5ab75b8c441aa139542/screenshots/ngrok.png)
 
 -----------------------------------------------------------------------------------
-## 17. Continuous Deployment
+## 18. Continuous Deployment
 - Jenkins pulls latest images
 - Stops old containers
 - Starts new containers
@@ -492,7 +492,7 @@ Although the same Docker Compose configuration is reused, logical environments a
 ![approve](https://github.com/PavanSPK/cicd-capstone/blob/d0fd24f679cbc1c409805ce64b19c21eb26c0718/screenshots/approve.png)
 
 -----------------------------------------------------------------------------------
-## 18. Deployment Script
+## 19. Deployment Script
 deploy.sh performs:
 - Existing containers are stopped
 - Latest images are pulled from Docker Hub
@@ -523,7 +523,7 @@ Run Health Check
 Deployment SUCCESS / FAILURE
 ```
 -----------------------------------------------------------------------------------
-## 19.Troubleshooting Guide
+## 20.Troubleshooting Guide
 This section lists common issues encountered during local execution or CI/CD pipeline runs, along with quick resolutions.
 
 ### Containers not starting:
@@ -585,13 +585,9 @@ Ensure Jenkins has access to Docker:
 
 -----------------------------------------------------------------------------------
 
-## 20.Conclusion
+## 21.Conclusion
 
-This capstone project successfully demonstrates the design and implementation of a complete CI/CD pipeline using Docker and Jenkins for a containerized web application. The solution automates the entire workflow from code commit to deployment, ensuring consistency, reliability, and repeatability across development, staging, and production environments.
-
-By integrating real webhook-based Continuous Integration, multi-stage Docker image optimization, automated security scanning, and controlled production deployments with manual approval, the project reflects industry-standard DevOps practices. The working frontend–backend–database integration further validates the correctness of the deployment and the effectiveness of the pipeline.
-
-Overall, the project shows end-to-end demonstration of modern CI/CD concepts suitable for real-world applications.
+This capstone project demonstrates an end-to-end CI/CD pipeline using Jenkins and Docker to automate the complete workflow from code commit to deployment for a containerized web application. By integrating GitHub webhooks, optimized Docker builds, automated security scanning, and reliable service deployment, the project follows real-world DevOps practices and validates a stable frontend–backend–database integration in a production-like environment.
 
 -----------------------------------------------------------------------------------
 
